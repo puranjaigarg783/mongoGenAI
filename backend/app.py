@@ -22,7 +22,7 @@ embedding_model_string = 'nomic-ai/nomic-embed-text-v1.5'
 mongo_client = MongoClient(uri, server_api=ServerApi('1'))
 
 fw_client = openai.OpenAI(
-    api_key="et9MwRyCcuEHGK5JQqTHKIgWAZEaYwB5GAbnlA0RkF8ZAaZT",
+    api_key="r7mW0ysTopLGGitOeTjIXFJV2J07wJRQqA8hfwE1LhRyAft0",
     base_url="https://api.fireworks.ai/inference/v1"
 )
 
