@@ -1,0 +1,57 @@
+<html>
+<head>
+    <title>Scribe AI</title>
+    <link rel="stylesheet" 
+        href="styles.css" 
+    />
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+    />
+</head>
+
+<body>
+    <div class="container" id="mainContainer" style="display: none;">
+        <!-- Chat header section start-->
+        <div class="msg-header">
+            <div class="container1">
+                <div class="active">
+                    <p>Scribe AI</p>
+                </div>
+            </div>
+        </div>
+        <!-- Chat header section ends -->
+
+        <!-- Chat section start  -->
+        <div class="chat-page">
+            <div class="msg-inbox">
+                <div class="chats">
+                    <div class="msg-page">
+                    <!-- Dynamically creating <div> using Javascript-->
+                    </div>
+                </div>
+
+                <!-- Chat input section start-->
+                <div class="msg-bottom">
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            id="inputBox"
+                            class="form-control"
+                            placeholder="Write message..."
+                        />    
+
+                        <span class="input-group-text send-icon">
+                            <i id="submitButton" class="bi bi-send"></i>
+                        </span>
+                    </div>
+                </div>
+                <!-- Chat input section ends-->
+            </div>
+        </div>
+        <!-- Chat section ends -->
+    </div>
+<script src="scribe.js"></script>
+</body>
+</html>
