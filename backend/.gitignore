@@ -1,3 +1,4 @@
 mongo/
 .env
 __pycache__/
+copy.txt
