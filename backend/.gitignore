@@ -4,3 +4,4 @@ __pycache__/
 copy.txt
 query.json
 process_query.py
+../.DS_Store
