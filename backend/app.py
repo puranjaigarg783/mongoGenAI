@@ -10,6 +10,7 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import openai
 from typing import List
+import sqlite3
 
 load_dotenv('.env')
 client = Groq(api_key=os.getenv('API_KEY'))
@@ -117,10 +118,25 @@ def load():
     data = request.json
     video_id = data.get('video_id')
 
+    conn = sqlite3.connect('videos.db')
+    c = conn.cursor()
+
+    # Create table if it doesn't exist
+    c.execute('''CREATE TABLE IF NOT EXISTS videos
+                 (video_id text PRIMARY KEY)''')
+
+    # Check if video_id is already in the database
+    c.execute("SELECT 1 FROM videos WHERE video_id=?", (video_id,))
+    if c.fetchone():
+        # Video ID found, return instant 200 response
+        return jsonify({'message': 'Video ID already processed'}), 200
+
+
     try:
         transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=['hi', 'en'])
     except:
         transcript = "No subtitles found!"
+        return jsonify({'message': transcript})
 
     json_formatted = json.dumps(transcript, indent=2)
 
@@ -130,6 +146,10 @@ def load():
     transcript_data = load_transcript('transcript.json')
     chunks = merge_captions(transcript_data)
     store_embeddings(chunks, video_id)
+
+    # Add video ID to SQLite database
+    c.execute("INSERT INTO videos (video_id) VALUES (?)", (video_id,))
+    conn.commit()
 
     return jsonify({'message': 'Transcript loaded and embeddings stored successfully'})
 
