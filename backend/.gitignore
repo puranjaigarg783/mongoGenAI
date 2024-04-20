@@ -3,3 +3,4 @@ mongo/
 __pycache__/
 copy.txt
 ../.DS_Store
+mongo/
