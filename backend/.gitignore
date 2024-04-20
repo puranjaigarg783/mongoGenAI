@@ -2,3 +2,5 @@ mongo/
 .env
 __pycache__/
 copy.txt
+query.json
+process_query.py
