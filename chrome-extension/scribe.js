@@ -2,10 +2,12 @@ document.addEventListener('DOMContentLoaded', async function () {
     const responseContainer = document.getElementById('mainContainer');
     const inputBox = document.getElementById('inputBox');
     const submitButton = document.getElementById('submitButton');
+    const loading = document.getElementById('loading');
   
     const responseData = await SendYoutubeVideoToBackEnd();
     if (responseData) {
         // Make the main container visible
+        loading.style.display = 'none';
         responseContainer.style.display = 'block';
     } else {
         console.error('Error fetching data from backend');
