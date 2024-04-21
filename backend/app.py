@@ -1,3 +1,4 @@
+import certifi
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from youtube_transcript_api import YouTubeTranscriptApi
@@ -18,9 +19,12 @@ client = Groq(api_key=os.getenv('API_KEY'))
 app = Flask(__name__)
 CORS(app)
 
-uri = "mongodb+srv://pgarg4:TE8HRkPMv18iBj64@cluster0.7y0k8ar.mongodb.net"
+ca = certifi.where()
+
+
+uri = "mongodb+srv://vdani:5f4GjSHahLtIhFh8@cluster0.1wv5hmt.mongodb.net"
 embedding_model_string = 'nomic-ai/nomic-embed-text-v1.5'
-mongo_client = MongoClient(uri, server_api=ServerApi('1'))
+mongo_client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=ca)
 
 fw_client = openai.OpenAI(
     api_key="r7mW0ysTopLGGitOeTjIXFJV2J07wJRQqA8hfwE1LhRyAft0",
@@ -133,7 +137,7 @@ def load():
 
 
     try:
-        transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=['hi', 'en'])
+        transcript = YouTubeTranscriptApi.get_transcript(video_id)
     except:
         transcript = "No subtitles found!"
         return jsonify({'message': transcript})
@@ -164,9 +168,11 @@ def get_response():
 
     top_k = 5
     search_results = search_relevant_chunks(video_id, query_embedding, top_k)
+    print(search_results)
 
     chunk_texts = extract_chunk_texts(search_results)
     context = form_context(chunk_texts)
+    print(context)
 
     llm_output = get_llm_answer(context, user_query)
     return jsonify({'llm_output': llm_output})
@@ -208,6 +214,7 @@ def search_relevant_chunks(video_id, query_embedding, top_k):
     ]
 
     results = collection.aggregate(pipeline)
+    print(results)
 
     return list(results)
 
@@ -219,4 +226,5 @@ def extract_chunk_texts(search_results):
 
 def form_context(chunk_texts):
     context = ' '.join(chunk_texts)
+    print(context)
     return context
