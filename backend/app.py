@@ -22,12 +22,12 @@ CORS(app)
 ca = certifi.where()
 
 
-uri = "mongodb+srv://vdani:5f4GjSHahLtIhFh8@cluster0.1wv5hmt.mongodb.net"
+uri = "{YOUR MONGO DB DB CLUSTER NAME}"
 embedding_model_string = 'nomic-ai/nomic-embed-text-v1.5'
 mongo_client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=ca)
 
 fw_client = openai.OpenAI(
-    api_key="r7mW0ysTopLGGitOeTjIXFJV2J07wJRQqA8hfwE1LhRyAft0",
+    api_key="{YOUR API KEY}",
     base_url="https://api.fireworks.ai/inference/v1"
 )
 
